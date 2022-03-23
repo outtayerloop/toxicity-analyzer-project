@@ -566,3 +566,9 @@ jenkins ALL=(ALL) NOPASSWD: ALL
 Then we restarted Jenkins by going to http://<jenkins_url>/restart
 
 Afterwards, everything that was left was mostly to configure credentials and build our pipeline.
+
+## Contributors
+
+@CarineTalandier
+@Nellemanette
+@wiwiii
