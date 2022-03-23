@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "toxicity-analyzer-api"
+version = "0.1.0"
+description = "Toxicity analyzer api component"
+authors = ["cbw"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Flask = "^2.0.2"
+Flask-Cors = "^3.0.10"
+python-dotenv = "^0.19.2"
+requests = "^2.27.1"
+pytest = "7.0.1"
+prometheus-client = "^0.13.1"
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

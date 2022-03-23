@@ -1,0 +1,36 @@
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+rule_files:
+  - rules.yml
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['alertmanager:9093']
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets:
+      - 'localhost:9090'
+  - job_name: node-exporter
+    static_configs:
+    - targets: ['node-exporter:9100']
+  - job_name: alertmanager
+    static_configs:
+    - targets: ['alertmanager:9093']
+  - job_name: grafana
+    static_configs:
+    - targets: ['grafana:3000']
+  - job_name: cadvisor
+    static_configs:
+    - targets: ['cadvisor:8080']
+  - job_name: toxicity-analyzer-model
+    static_configs:
+    - targets: ['toxicity_analyzer_model:8010', 'toxicity_analyzer_model:8000']
+  - job_name: toxicity-analyzer-back
+    static_configs:
+    - targets: ['toxicity_analyzer_back:8010', 'toxicity_analyzer_back:5000']
+  - job_name: toxicity-analyzer-front
+    static_configs:
+    - targets: ['toxicity_analyzer_front:3000']
+    proxy_url: 'http://toxicity_analyzer_front:4040'

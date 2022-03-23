@@ -1,0 +1,65 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+	"jenkins:serve": "npm run start",
+    "serve": "concurrently \"npm run start\" \"npm run monitor\"",
+    "start": "vue-cli-service serve --port 3000",
+    "monitor": "node monitoring/monitoring-server.js",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "cy:open": "npx cypress open",
+	"cy:jenkins:run": "npx cypress run --headless",
+    "cy:e2e:run": "npx cypress run --headless --spec ./cypress/integration/e2e/*.spec.js",
+    "cy:integration:run": "npx cypress run --headless --spec ./cypress/integration/*.spec.js",
+    "e2e:run": "start-server-and-test e2e:setup http-get://127.0.0.1:3000 cy:e2e:run",
+	"jenkins:run": "start-server-and-test e2e:setup http-get://127.0.0.1:3000 cy:jenkins:run",
+    "e2e:setup": "start-server-and-test api:run http-get://127.0.0.1:5000/ jenkins:serve",
+    "api:run": "start-server-and-test model:run http-get://127.0.0.1:8000/ back:run",
+    "model:run": "cd ../model && poetry run python -m pytest tests/e2e/server_launch_config.py && cd ../front",
+    "back:run": "cd ../back && poetry run python -m pytest tests/e2e/server_launch_config.py && cd ../front",
+    "integration:run": "start-server-and-test jenkins:serve http-get://127.0.0.1:3000 cy:integration:run"
+  },
+  "dependencies": {
+    "axios": "^0.26.0",
+    "body-parser": "^1.19.2",
+    "bootstrap-vue": "^2.21.2",
+    "concurrently": "^7.0.0",
+    "core-js": "^3.6.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "prom-client": "^14.0.1",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "cypress": "^9.5.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0",
+    "start-server-and-test": "^1.14.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
